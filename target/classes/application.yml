@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: highonmusic-songs
+server:
+  port: 8081
