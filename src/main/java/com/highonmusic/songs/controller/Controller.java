@@ -1,17 +1,19 @@
 package com.highonmusic.songs.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.highonmusic.songs.dto.SongDto;
 import com.highonmusic.songs.dto.TestDto;
 import com.highonmusic.songs.service.SongService;
 import com.highonmusic.songs.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
+
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -21,10 +23,14 @@ public class Controller {
     private final TestService testService;
     private final SongService songService;
 
+    private final RestTemplate restTemplate;
+    private String token="";
+
     @Autowired
-    public Controller(TestService testService,SongService songService){
+    public Controller(TestService testService, SongService songService,RestTemplate restTemplate){
         this.testService = testService;
         this.songService = songService;
+        this.restTemplate = restTemplate;
     }
     @GetMapping("")
     public String test() {
@@ -43,7 +49,13 @@ public class Controller {
 
     @GetMapping("/getSongs")
     public List<SongDto> getSongs(){
-        List<SongDto> list = (List<SongDto>) songService.getSongs();
+        String usersServiceUrl = "http://localhost:5000/users/passToken";
+        ResponseEntity<String> response = restTemplate.getForEntity(usersServiceUrl, String.class);
+        token = response.getBody();
+        List<SongDto> list = new ArrayList<>();
+        if(token.length()>5){
+            list = (List<SongDto>) songService.getSongs();
+        }
         return list;
     }
 }
