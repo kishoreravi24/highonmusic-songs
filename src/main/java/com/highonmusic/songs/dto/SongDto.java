@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "songs")
 public class SongDto {
     @Id
-    private String name;
+    private String Id;
     private String audio;
     private Tag[] tag;
 
@@ -22,5 +22,7 @@ public class SongDto {
     private static class Tag{
         private String language;
         private String movie;
+        private String name;
+        private String preview;
     }
 }

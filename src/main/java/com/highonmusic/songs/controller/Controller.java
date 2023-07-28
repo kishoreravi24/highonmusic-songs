@@ -55,6 +55,7 @@ public class Controller {
         List<SongDto> list = new ArrayList<>();
         if(token.length()>5){
             list = (List<SongDto>) songService.getSongs();
+            System.out.println(list.get(0).getTag());
         }
         return list;
     }
