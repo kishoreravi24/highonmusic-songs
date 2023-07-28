@@ -1,5 +1,7 @@
 package com.highonmusic.songs.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.highonmusic.songs.dto.SongDto;
 import com.highonmusic.songs.dto.TestDto;
 import com.highonmusic.songs.service.SongService;
@@ -40,11 +42,8 @@ public class Controller {
     }
 
     @GetMapping("/getSongs")
-    public String getSongs(){
+    public List<SongDto> getSongs(){
         List<SongDto> list = (List<SongDto>) songService.getSongs();
-        for(int i=0;i<list.size();i++){
-            System.out.println(list.get(i));
-        }
-        return "Yes, check console";
+        return list;
     }
 }

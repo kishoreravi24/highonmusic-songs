@@ -10,6 +10,7 @@ spring:
       host: localhost
       port: 27017
       database: highonmusic
+      collection: songs
 eureka:
   client:
     service-url:
