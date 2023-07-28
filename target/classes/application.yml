@@ -1,6 +1,16 @@
 spring:
   application:
     name: highonmusic-songs
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: true
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: highonmusic
+      collection: songs
 eureka:
   client:
     service-url:
